@@ -17,15 +17,15 @@ void setup()
 
 void draw()
 {
-  background(0);
+  background(255);
   lights();
  
   pushMatrix();
   translate(width / 2, height / 2);
-  rotateX(rot);
+  //rotateX(rot);
   rotateY(rot);
   noFill();
-  stroke(255);
+  stroke(128);
   box(400, 400, 400);
   popMatrix();
       
@@ -40,6 +40,5 @@ void draw()
     m[i].drawMe();
   }
 
-  
-  rot += 0.001;
+  rot += 0.01;
 }
