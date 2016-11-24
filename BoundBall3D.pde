@@ -1,4 +1,5 @@
-float rot;
+float _boxSize = 350;
+float _rot;
 float wallz, wallDirection;
 Mover m[];
 
@@ -8,10 +9,10 @@ void setup()
   frameRate(30);
   smooth();
   
-  rot = 90;
+  _rot = 90;
   wallz = 0;
-  wallDirection = 1;
-  m = new Mover[2];
+  wallDirection = 2;
+  m = new Mover[512];
   for(int i = 0; i < m.length; i++)
   {
     m[i] = new Mover(i);
@@ -25,18 +26,18 @@ void draw()
  
   pushMatrix();
   translate(width / 2, height / 2);
-  rotateY(rot);
+  rotateY(_rot);
   noFill();
   stroke(128);
-  box(400, 400, 400);
+  box(_boxSize + 5);
   popMatrix();
 
   pushMatrix();
   translate(width / 2, height / 2);
-  rotateY(rot);
+  rotateY(_rot);
   translate(0, 0, wallz);
-  fill(0, 0, 255, 128);
-  rect(-200, -200, 400, 400);
+  fill(255, 128);
+  rect(-_boxSize / 2, -_boxSize / 2, _boxSize, _boxSize);
   popMatrix();
   
   if(frameCount % 15 == 1)
@@ -50,11 +51,19 @@ void draw()
     m[i].drawMe();
   }
 
-  if(wallz > 190 || wallz < -190)
+  if(wallz > 130 || wallz < -130)
   {
     wallDirection *= -1;
   }
   wallz += wallDirection;
   
-  rot += 0.01;
+  _rot += 0.01;
+  
+  saveFrame("screen-#####.png");  
+  println(frameCount);
+  
+  if(frameCount > 1800)
+  {
+    exit();
+  }
 }
