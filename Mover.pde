@@ -1,5 +1,6 @@
 class Mover
 {
+  int index;
   PVector location;
   PVector vectorization;
   color bodyColor;
@@ -7,12 +8,26 @@ class Mover
   
   float noisex, noisey, noisez;
   
-  Mover()
+  Mover(int i)
   {
-    location = new PVector(0, 0, 0);
+    index = i;
+    if(index % 2 == 0)
+    {
+      location = new PVector(0, 0, -100);
+    }else
+    {
+      location = new PVector(0, 0, 100);
+    }
     vectorization = new PVector(random(3, 5), random(3, 5), random(3, 5));
-    bodyColor = color(random(128,255), random(128,255), random(128,255));
-    bodySize = 20;
+    
+    if(index % 2 == 0)
+    {
+      bodyColor = color(0, 0, random(255));
+    }else
+    {
+      bodyColor = color(random(255), 0, 0);
+    }
+    bodySize = 10;
     
     noisex = random(10);
     noisey = random(10);
@@ -27,53 +42,27 @@ class Mover
   
   void update()
   {
-    location = new PVector(noise(noisex) * 400 - 200, noise(noisey) * 400 - 200, noise(noisez) * 400 - 200);
-    noisex += 0.01;
-    noisey += 0.01;
-    noisez += 0.01;
-    
-    /*
-    location.add(vectorization);
-    
-    if(location.x > 200)
+    if(index % 2 == 0)
     {
-      vectorization.x *= -1;
-    }else if(location.x < -200)
+      location = new PVector(noise(noisex) * 400 - 200, noise(noisey) * 400 - 200, noise(noisez) * (wallz - (-200 + bodySize)) + (-200 + bodySize));
+    }else
     {
-      vectorization.x *= -1;
+      location = new PVector(noise(noisex) * 400 - 200, noise(noisey) * 400 - 200, noise(noisez) * (200 - (wallz + bodySize)) + (wallz + bodySize));
     }
-    
-    if(location.y > 200)
-    {
-      vectorization.y *= -1;
-    }else if(location.y < -200)
-    {
-      vectorization.y *= -1;
-    }
-    
-    if(location.z > 200)
-    {
-      vectorization.z *= -1;
-    }else if(location.z < -200)
-    {
-      vectorization.z *= -1;
-    }
-    */
+    noisex += 0.025;
+    noisey += 0.025;
+    noisez += 0.025;
   }
   
   void display()
   {    
     pushMatrix();
     translate(width / 2, height /2, 0);
-    //rotateX(rot);
     rotateY(rot);
-    
     translate(location.x, location.y, location.z);
-    
     noStroke();
     fill(bodyColor);
-    sphere(bodySize);
-       
+    sphere(bodySize);  
     popMatrix();
   }
 }
