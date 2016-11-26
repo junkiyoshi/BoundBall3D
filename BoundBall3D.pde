@@ -59,8 +59,8 @@ void draw()
   
   _rot += 0.01;
   
-  saveFrame("screen-#####.png");  
-  println(frameCount);
+  // saveFrame("screen-#####.png");  
+  // println(frameCount);
   
   if(frameCount > 1800)
   {
